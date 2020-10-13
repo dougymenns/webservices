@@ -2,6 +2,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
+const morgan = require('morgan')
 
 //local imports
 const sequelize = require('./util/database')
@@ -17,13 +18,14 @@ app.use(bodyParser.json())
 
 
 
-app.use((req,res, next)=>{
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     next()
 })
 
+app.use(morgan('dev'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -31,18 +33,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/api/auth', authRoute)
 app.use('/api/users', usersoutes)
 
-app.get("/hello",(req,res)=>{
-    res.send("Hello World")
-})
+
 
 //postgres db connection
-try{
+try {
     sequelize.authenticate()
-}catch(e){
+} catch (e) {
     console.log(e)
 }
 
 //server listening
-app.listen(process.env.PORT || 8080,()=>{
+app.listen(process.env.PORT || 8080, () => {
     console.log(`Server is listening on port ${process.env.PORT}`)
 })
