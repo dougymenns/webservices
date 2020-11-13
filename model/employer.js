@@ -1,50 +1,43 @@
 const Sequelize = require('sequelize')
 
-const sequelize = require('../util/database')
+const sequelize = require("../util/database")
 
-const Users = sequelize.define('users',{
+const EmployerProfile = sequelize.define('employer_profiles',{
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    first_name: {
+    region: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    last_name: {
+    user_id: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_name: {
+    company_name: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_type: {
+    years_of_existence: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    phone: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        required: true,
-        unique: true
-    },
-    email: {
-        type:Sequelize.STRING,
-        allowNull: false,
-        required: true,
-        unique: true
-    },
-    password:{
+    about: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
+    },
+    profile_picture: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        required: false,
     },
     createdAt: {
         field: 'created_at',
@@ -56,4 +49,4 @@ const Users = sequelize.define('users',{
     },
 })
 
-module.exports = Users
+module.exports = EmployerProfile

@@ -7,7 +7,9 @@ const morgan = require('morgan')
 //local imports
 const sequelize = require('./util/database')
 const authRoute = require('./routes/auth')
-const usersoutes = require('./routes/users')
+const usersroutes = require('./routes/users')
+const freelancerroutes = require('./routes/freelancer')
+const employerroutes = require('./routes/employer')
 
 //env and express initialization
 dotenv.config()
@@ -28,10 +30,13 @@ app.use((req, res, next) => {
 app.use(morgan('dev'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
 
 //routes
 app.use('/api/auth', authRoute)
-app.use('/api/users', usersoutes)
+app.use('/api/users', usersroutes)
+app.use('/api/freelancer', freelancerroutes)
+app.use('/api/employer', employerroutes)
 
 
 

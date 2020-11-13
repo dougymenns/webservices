@@ -1,47 +1,40 @@
 const Sequelize = require('sequelize')
 
-const sequelize = require('../util/database')
+const sequelize = require("../util/database")
 
-const Users = sequelize.define('users',{
+const PostJobs = sequelize.define('post_jobs',{
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    first_name: {
+    user_id: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    last_name: {
+    job_title: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_name: {
+    job_description: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_type: {
+    file: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        required: false
+    },
+    work_done: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    phone: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        required: true,
-        unique: true
-    },
-    email: {
-        type:Sequelize.STRING,
-        allowNull: false,
-        required: true,
-        unique: true
-    },
-    password:{
+    amount: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
@@ -56,4 +49,4 @@ const Users = sequelize.define('users',{
     },
 })
 
-module.exports = Users
+module.exports = PostJobs

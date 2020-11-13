@@ -1,50 +1,55 @@
 const Sequelize = require('sequelize')
 
-const sequelize = require('../util/database')
+const sequelize = require("../util/database")
 
-const Users = sequelize.define('users',{
+const FreelancerProfile = sequelize.define('freelancer_profile',{
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    first_name: {
+    user_id: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    last_name: {
+    region: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_name: {
+    expertise: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    user_type: {
+    level_of_expertise: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true
     },
-    phone: {
+    other_skills: {
         type: Sequelize.STRING,
         allowNull: false,
         required: true,
         unique: true
     },
-    email: {
+    about: {
         type:Sequelize.STRING,
         allowNull: false,
         required: true,
         unique: true
     },
-    password:{
+    picture:{
         type: Sequelize.STRING,
-        allowNull: false,
-        required: true
+        allowNull: true,
+        required: false
+    },
+    resume:{
+        type: Sequelize.STRING,
+        allowNull: true,
+        required: false
     },
     createdAt: {
         field: 'created_at',
@@ -56,4 +61,4 @@ const Users = sequelize.define('users',{
     },
 })
 
-module.exports = Users
+module.exports = FreelancerProfile
