@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const sequelize = require("../util/database")
-
+const emailService = require("../util/notificationService")
 const { required } = require("joi");
 //local import
 const Users = require("../model/users");
@@ -63,12 +63,11 @@ exports.login = async(req, res) => {
         //token assignment
         const token = jwt.sign({ email: user.email, phone: user.phone }, process.env.TOKEN_SECRET)
         res.header('auth-token', token).json({ token, user: user.email, phone: user.phone })
+        emailService.sendMail(req.body.email,"Login Subject","this is to inform you that you successfully logged in")
     } catch (err) {
         console.log(err)
 
-    } finally {
-        await sequelize.close()
-    }
+    } 
 
 }
 
@@ -77,4 +76,12 @@ exports.getUsers = (req, res) => {
     res.json({
         title: 'hello'
     })
+}
+
+exports.upload = async (req,res)=>{
+    try{
+return res.json({status:"ok"})
+    }catch(err){
+        console.log(err)
+    }
 }

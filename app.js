@@ -3,15 +3,18 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
+const multer = require('multer')
 
 //local imports
 const sequelize = require('./util/database')
 const authRoute = require('./routes/auth')
 const usersoutes = require('./routes/users')
+const upload = multer({dest: 'uploads/'})
 
 //env and express initialization
 dotenv.config()
 const app = express()
+app.use(express.static('public'))
 
 //body-parser middleware
 app.use(bodyParser.json())
@@ -43,6 +46,6 @@ try {
 }
 
 //server listening
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT || 8089, () => {
     console.log(`Server is listening on port ${process.env.PORT}`)
 })
