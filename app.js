@@ -1,14 +1,15 @@
-//external packages
+//external packages imports
 const express = require("express")
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const multer = require('multer')
 
-//local imports
+//local modules imports
 const sequelize = require('./util/database')
 const authRoute = require('./routes/auth')
 const usersoutes = require('./routes/users')
+const gssroutes = require('./routes/gss')
 const upload = multer({dest: 'uploads/'})
 
 //env and express initialization
@@ -20,7 +21,7 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 
-
+//allowing cors and other methods in express
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH')
@@ -28,13 +29,16 @@ app.use((req, res, next) => {
     next()
 })
 
+//logging endpoint
 app.use(morgan('dev'))
 
+//extract the entire body portion of an incoming request stream and exposes it on req. body
 app.use(bodyParser.urlencoded({ extended: false }))
 
 //routes
 app.use('/api/auth', authRoute)
 app.use('/api/users', usersoutes)
+app.use('/api/gss', gssroutes)
 
 
 
@@ -45,7 +49,7 @@ try {
     console.log(e)
 }
 
-//server listening
-app.listen(process.env.PORT || 8089, () => {
+//server listening(start)
+app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is listening on port ${process.env.PORT}`)
 })

@@ -2,6 +2,10 @@
 const { Router } = require('express')
 const router = Router()
 const multer = require('multer')
+const usersControllers = require('../controller/users')
+const verifyToken = require("../auth/index")
+// const singleUpload = upload.single('file');
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads/')
@@ -13,14 +17,14 @@ var storage = multer.diskStorage({
   })
    
 
+
 const upload = multer({storage})
 
-//local imports
-const usersControllers = require('../controller/users')
-const verifyToken = require("../auth/index")
 
-router.get('/', verifyToken , usersControllers.getUsers)
-router.post('/upload', upload.array('file') , usersControllers.upload)
+
+// router.get('/', verifyToken , usersControllers.getUsers)
+router.post('/multer-upload', upload.array('file') , usersControllers.upload)
+router.post('/upload', usersControllers.awsUpload);
 
 
 module.exports = router

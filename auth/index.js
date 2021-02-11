@@ -1,14 +1,17 @@
+//import jsonwebtoken library 
 const jwt = require("jsonwebtoken");
 
-module.exports = function(req, res, next) {
-    const authHeader = req.header("authorization");
-    console.log(req.header('authorization'));
-    if (authHeader) {
-        const token = authHeader.split(' ')[1];
-        verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        req.user = verified;
-        next();
-    } else {
-        res.sendStatus(401);
-    }
+//export module as a middleware
+exports.authUser = async (header) => {
+  const token = header.split(" ")[1];
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        console.log(err)
+        reject({ success: false, err });
+      } else { 
+        resolve({ success: true, decoded });
+      }
+    });
+  });
 };
